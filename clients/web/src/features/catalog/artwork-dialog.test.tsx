@@ -45,6 +45,7 @@ afterEach(() => {
 const SHOWN = {
   title: 'Heat',
   originalTitle: null,
+  tagline: null,
   year: 1995,
   overview: null,
   genres: [],
