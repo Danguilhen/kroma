@@ -142,9 +142,11 @@ impl Screens {
             .map(|e| (e.owner.clone(), e.device.id.clone()))
             .collect();
         inner.roster.retain(|e| e.connection != connection);
-        inner
-            .pending
-            .retain(|_, p| !gone.iter().any(|(owner, id)| *owner == p.owner && *id == p.screen_id));
+        inner.pending.retain(|_, p| {
+            !gone
+                .iter()
+                .any(|(owner, id)| *owner == p.owner && *id == p.screen_id)
+        });
     }
 
     /// The live screens signed in as `user_id`.
@@ -169,7 +171,11 @@ impl Screens {
         if !known {
             return Err(Refused::Unknown);
         }
-        let open = inner.pending.values().filter(|p| p.owner == user_id).count();
+        let open = inner
+            .pending
+            .values()
+            .filter(|p| p.owner == user_id)
+            .count();
         if open >= MAX_PENDING_PER_USER {
             return Err(Refused::Busy);
         }

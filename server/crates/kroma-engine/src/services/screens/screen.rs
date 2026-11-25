@@ -116,7 +116,8 @@ mod tests {
 
     #[test]
     fn a_nested_prop_is_not_a_row() {
-        let value = json!({ "depth": 0, "name": "Box", "props": { "style": { "a": 1 } }, "box": null });
+        let value =
+            json!({ "depth": 0, "name": "Box", "props": { "style": { "a": 1 } }, "box": null });
 
         assert!(serde_json::from_value::<ScreenRow>(value).is_err());
     }
@@ -144,9 +145,10 @@ mod tests {
         let long_name = screen_of(vec![row(0, &"N".repeat(MAX_NAME_BYTES + 1))]);
         let empty_name = screen_of(vec![row(0, "")]);
         let mut long_text = screen_of(vec![row(0, "Text")]);
-        long_text.rows[0]
-            .props
-            .insert("children".into(), PropValue::Text("t".repeat(MAX_TEXT_BYTES + 1)));
+        long_text.rows[0].props.insert(
+            "children".into(),
+            PropValue::Text("t".repeat(MAX_TEXT_BYTES + 1)),
+        );
 
         assert!(!long_name.within_bounds());
         assert!(!empty_name.within_bounds());
